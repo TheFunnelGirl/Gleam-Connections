@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gleam Connections — Full Client Acquisition Funnel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blush: #e59d92;
+    --blush-light: #f0c4bc;
+    --blush-pale: #faf1ef;
+    --gold: #b69033;
+    --gold-light: #d4ae5a;
+    --gold-pale: #faf6ec;
+    --olive: #7b784e;
+    --dark: #3f3e3a;
+    --dark-mid: #5c5a54;
+    --cream: #f6f4f1;
+    --cream-deep: #ede9e3;
+    --white: #ffffff;
+    --border: rgba(63,62,58,0.12);
+    --border-gold: rgba(182,144,51,0.25);
+  }
+
+  html { font-size: 16px; scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 2.5rem 2rem 2rem;
+    text-align: center;
+  }
+
+  .logo-wrap {
+    display: inline-block;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 1.25rem;
+    box-shadow: 0 2px 20px rgba(229,157,146,0.18);
+  }
+
+  .logo-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .header-label {
+    font-family: 'Jost', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--blush);
+    margin-bottom: 0.5rem;
+  }
+
+  .header-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 300;
+    color: var(--dark);
+    letter-spacing: 0.01em;
+    line-height: 1.2;
+    margin-bottom: 0.4rem;
+  }
+
+  .header-title em {
+    font-style: italic;
+    color: var(--blush);
+  }
+
+  .header-sub {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--dark-mid);
+    letter-spacing: 0.04em;
+    margin-bottom: 1.5rem;
+  }
+
+  .header-divider {
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+    margin: 0 auto;
+    opacity: 0.5;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 5rem;
+  }
+
+  /* ── SECTION LABEL ── */
+  .section-eyebrow {
+    font-size: 9.5px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  /* ── INTRO BLOCK ── */
+  .intro {
+    margin-bottom: 3.5rem;
+  }
+
+  .intro-headline {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(1.3rem, 3vw, 1.75rem);
+    font-weight: 300;
+    color: var(--dark);
+    line-height: 1.35;
+    margin-bottom: 1rem;
+  }
+
+  .intro-headline em { font-style: italic; color: var(--blush); }
+
+  .intro-text {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--dark-mid);
+    line-height: 1.8;
+    max-width: 620px;
+  }
+
+  /* ── STAGES ── */
+  .stages { display: flex; flex-direction: column; gap: 0; }
+
+  .stage-item { position: relative; }
+
+  .stage-connector {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 0 0 24px;
+    height: 36px;
+  }
+
+  .connector-line {
+    width: 1px;
+    height: 36px;
+    background: linear-gradient(to bottom, var(--border-gold), var(--border-gold));
+    flex-shrink: 0;
+  }
+
+  .connector-label {
+    font-size: 10.5px;
+    font-weight: 300;
+    letter-spacing: 0.06em;
+    color: var(--gold);
+    opacity: 0.7;
+    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  .stage-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+  }
+
+  .stage-card:hover {
+    border-color: rgba(182,144,51,0.3);
+    box-shadow: 0 4px 24px rgba(63,62,58,0.06);
+  }
+
+  .stage-card.open {
+    border-color: rgba(182,144,51,0.35);
+    box-shadow: 0 6px 32px rgba(63,62,58,0.08);
+  }
+
+  .stage-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+  }
+
+  .stage-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 300;
+    color: var(--blush-light);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 2.2rem;
+    text-align: center;
+  }
+
+  .stage-main { flex: 1; min-width: 0; }
+
+  .stage-tag {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-bottom: 4px;
+  }
+
+  .tag-1 { background: #f2effe; color: #5a4fbf; }
+  .tag-2 { background: #e8f6f0; color: #2a6b52; }
+  .tag-3 { background: #faf3e0; color: #8a6520; }
+  .tag-4 { background: #fdf0ee; color: #943f30; }
+  .tag-5 { background: #f7eaf3; color: #7a3568; }
+  .tag-6 { background: #edf5e6; color: #3a6428; }
+
+  .stage-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: var(--dark);
+    line-height: 1.2;
+    margin-bottom: 3px;
+  }
+
+  .stage-subtitle {
+    font-size: 12.5px;
+    font-weight: 300;
+    color: var(--dark-mid);
+    line-height: 1.55;
+  }
+
+  .stage-toggle {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    color: var(--dark-mid);
+  }
+
+  .stage-card.open .stage-toggle {
+    border-color: var(--gold);
+    color: var(--gold);
+    transform: rotate(45deg);
+  }
+
+  .stage-toggle svg {
+    width: 12px;
+    height: 12px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+  }
+
+  /* ── DETAIL PANEL ── */
+  .stage-detail {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .stage-detail.open { max-height: 1000px; }
+
+  .stage-detail-inner {
+    padding: 0 1.5rem 1.5rem 1.5rem;
+    border-top: 1px solid var(--border);
+    margin: 0 0 0 3.2rem;
+  }
+
+  .detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    padding-top: 1.25rem;
+  }
+
+  @media (max-width: 580px) {
+    .detail-grid { grid-template-columns: 1fr; }
+    .stage-detail-inner { margin-left: 0; }
+  }
+
+  .detail-item {}
+
+  .detail-item-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .detail-item-label::before {
+    content: '';
+    display: block;
+    width: 16px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.5;
+    flex-shrink: 0;
+  }
+
+  .detail-item-text {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--dark-mid);
+    line-height: 1.75;
+  }
+
+  .detail-goal {
+    margin-top: 1.25rem;
+    padding: 0.9rem 1rem;
+    background: var(--cream);
+    border-left: 2px solid var(--gold);
+    border-radius: 0 4px 4px 0;
+  }
+
+  .detail-goal-label {
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+
+  .detail-goal-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--dark);
+    line-height: 1.5;
+  }
+
+  /* ── VALUE LADDER ── */
+  .value-ladder-section {
+    margin-top: 3.5rem;
+  }
+
+  .vl-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--dark);
+    margin-bottom: 0.4rem;
+  }
+
+  .vl-title em { font-style: italic; color: var(--gold); }
+
+  .vl-sub {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--dark-mid);
+    margin-bottom: 1.75rem;
+  }
+
+  .vl-rows { display: flex; flex-direction: column; gap: 0; }
+
+  .vl-row {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-bottom: none;
+    gap: 1rem;
+    transition: background 0.15s;
+  }
+
+  .vl-row:first-child { border-radius: 4px 4px 0 0; }
+  .vl-row:last-child { border-radius: 0 0 4px 4px; border-bottom: 1px solid var(--border); }
+  .vl-row:hover { background: var(--cream); }
+
+  .vl-row-left { display: flex; align-items: center; gap: 12px; }
+
+  .vl-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .dot-free { background: #c5c3bb; }
+  .dot-low { background: var(--blush); }
+  .dot-mid { background: var(--gold); }
+  .dot-high { background: var(--olive); }
+  .dot-addon { background: var(--dark-mid); }
+
+  .vl-offer {
+    font-size: 13.5px;
+    font-weight: 400;
+    color: var(--dark);
+  }
+
+  .vl-offer-note {
+    font-size: 11.5px;
+    font-weight: 300;
+    color: var(--dark-mid);
+    margin-top: 1px;
+    font-style: italic;
+  }
+
+  .vl-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    font-weight: 400;
+    color: var(--gold);
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .vl-price.free { color: #7b784e; font-size: 0.9rem; letter-spacing: 0.06em; }
+
+  /* ── BRUNSON PRINCIPLE ── */
+  .principle-block {
+    margin-top: 3.5rem;
+    padding: 2rem 2rem 2rem 2.25rem;
+    background: var(--white);
+    border: 1px solid var(--border-gold);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .principle-block::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, var(--gold-light), var(--blush));
+  }
+
+  .principle-eyebrow {
+    font-size: 9.5px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+  }
+
+  .principle-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 300;
+    color: var(--dark);
+    line-height: 1.6;
+  }
+
+  .principle-text em { font-style: italic; color: var(--gold); }
+
+  .principle-note {
+    margin-top: 1rem;
+    font-size: 12.5px;
+    font-weight: 300;
+    color: var(--dark-mid);
+    line-height: 1.7;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .footer-logo {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 1rem;
+    opacity: 0.6;
+  }
+
+  .footer-logo img { width: 100%; height: 100%; object-fit: cover; }
+
+  .footer-text {
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: var(--dark-mid);
+    opacity: 0.6;
+  }
+
+  /* ── ANIMATIONS ── */
+  @media (prefers-reduced-motion: no-preference) {
+    .stage-card { transition: border-color 0.2s, box-shadow 0.25s; }
+    .stage-detail { transition: max-height 0.38s cubic-bezier(0.4,0,0.2,1); }
+  }
+
+  /* ── PRINT / SAVE ── */
+  @media print {
+    .stage-detail { max-height: none !important; display: block !important; }
+    .stage-toggle { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="logo-wrap">
+    <img src="antonia-logo.png" alt="Antonia 2.0 — Digital Business Services">
+  </div>
+  <p class="header-label">Prepared by Antonia 2.0</p>
+  <h1 class="header-title">Gleam Connections —<br><em>Full Client Acquisition Funnel</em></h1>
+  <p class="header-sub">A complete six-stage system to go from cold audience to retained client</p>
+  <div class="header-divider"></div>
+</header>
+
+<!-- PAGE BODY -->
+<main class="page">
+
+  <!-- INTRO -->
+  <section class="intro">
+    <p class="section-eyebrow">The diagnosis</p>
+    <h2 class="intro-headline">The problem isn't that clients aren't out there.<br><em>The problem is there's no path for them to walk in.</em></h2>
+    <p class="intro-text">Right now, Gleam runs entirely on referrals and personal energy. Every new client requires someone's direct attention to close — there's no backend doing any work. This strategy builds the infrastructure that runs in the background, so the next client is easier than the last one.</p>
+  </section>
+
+  <!-- STAGES -->
+  <section>
+    <p class="section-eyebrow">The six stages</p>
+    <div class="stages" id="stages">
+
+      <!-- STAGE 1 -->
+      <div class="stage-item">
+        <div class="stage-card" onclick="toggleStage(this)">
+          <div class="stage-header">
+            <span class="stage-number">1</span>
+            <div class="stage-main">
+              <span class="stage-tag tag-1">Attention</span>
+              <div class="stage-title">Getting in the room</div>
+              <div class="stage-subtitle">Cold audience discovers Gleam exists. They don't know they have a marketing problem yet.</div>
+            </div>
+            <div class="stage-toggle">
+              <svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+            </div>
+          </div>
+          <div class="stage-detail">
+            <div class="stage-detail-inner">
+              <div class="detail-grid">
+                <div class="detail-item">
+                  <div class="detail-item-label">Content strategy</div>
+                  <div class="detail-item-text">Trial reels — B-roll with on-screen text, no face to camera required. Hooks rooted in the dream client's actual pain: "your website is costing you sales and you don't even know it." Business relevance appears at the end, subtly.</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-item-label">Platforms</div>
+                  <div class="detail-item-text">Instagram is the primary channel. LinkedIn is secondary for B2B-leaning clients. The referral network (current clients, Sales Academy connections) is the warmest traffic of all — treat it that way.</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-item-label">The Dream 100 approach</div>
+                  <div class="detail-item-text">Identify 100 accounts where the ideal client already hangs out: wine industry groups, lifestyle brand pages, small business communities. Engage genuinely. Become a recognizable face before pitching anything.</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-item-label">Content angle that works</div>
+                  <div class="detail-item-text">"We audited your marketing" green screen series — break down a real brand's ecosystem (website + email + Instagram) live. Builds authority and social proof at the same time. One piece of content does three jobs.</div>
+                </div>
+              </div>
+              <div class="detail-goal">
+                <div class="detail-goal-label">Stage goal</div>
+                <div class="detail-goal-text">Get the right person to stop scrolling. That's it. One hook. One pattern interrupt. Done.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stage-connector">
+        <div class="connector-line"></div>
+        <span class="connector-label">profile visits, follows, inbound DMs</span>
+      </div>
+
+      <!-- STAGE 2 -->
+      <div class="stage-item">
+        <div class="stage-card" onclick="toggleStage(this)">
+          <div class="stage-header">
+            <span class="stage-number">2</span>
+            <div class="stage-main">
+              <span class="stage-tag tag-2">Entry</span>
+              <div class="stage-title">Capturing the lead</div>
+              <div class="stage-subtitle">Warm lead raises their hand. You get them off social and onto a list you actually own.</div>
+            </div>
+            <div class="stage-toggle">
+              <svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+            </div>
+          </div>
+          <div class="stage-detail">
+            <div class="stage-detail-inner">
+              <div class="detail-grid">
+                <div class="detail-item">
+                  <div class="detail-item-label">The bait (free lead magnet)</div>
+                  <div class="detail-item-text">"We audited 10 small business Instagram accounts — here's the 5 things they all got wrong." A short PDF or carousel that proves expertise without selling anything. Delivered via ManyChat trigger or email opt-in link.</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-item-label">Hand-raiser content</div>
+                  <div class="detail-item-text">Carousels that tease — open the loop, add specificity, end with one-word CTAs like "AUDIT" or "GAPS" to trigger an automated DM. Low friction, easy yes. The bait must attract the ideal client and actively repel everyone else.</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-item-label">Email capture</div>
+                  <div class="detail-item-text">A clean landing page (Flodesk or Tiiny.host) tied to the free resource. The email list is the asset — not the Instagram following. Once they're on the list, you can nurture without the algorithm getting in the way.</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-item-label">ManyChat setup</div>
+                  <div class="detail-item-text">Trigger words set up on key posts — when someone comments or DMs, they instantly receive the lead magnet. This means leads are captured even when no one is watching the phone.</div>
+                </div>
+              </div>
+              <div class="detail-goal">
+                <div class="detail-goal-label">Stage goal</div>
+                <div class="detail-goal-text">Get their email. Turn a follower into a lead. Now you own the relationship — the algorithm doesn't.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stage-connector">
+        <div class="connector-line"></div>
+        <span class="connector-label">email opt-in, lead magnet download</span>
+      </div>
+
+      <!-- STAGE 3 -->
+      <div class="stage-item">
+        <div class="stage-card" onclick="toggleStage(this)">
+          <div class="stage-header">
+            <span class="stage-number">3</span>
+            <div class="stage-main">
+              <span class="stage-tag tag-3">Trust</span>
+              <div class="stage-title">Earning the right to sell</div>
+              <div class="stage-subtitle">The nurture period. Prove you understand their world before you ever ask for anything.</div>
+            </div>
+            <div class="stage-toggle">
+              <svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+            </div>
+          </div>
+          <div class="stage-detail">
+            <div class="stage-detail-inner">
+              <div class="detail-grid">
+                <div class="detail-item">
+                  <div class="detail-item-label">Email sequence — 5 emails / 10 days</div>
+                  <div class="detail-item-text">
+                    <strong style="font-weight:500">Email 1</strong> — warm welcome, set expectations, one quick win tip.<br>
+                    <strong style="font-weight:500">Email 2</strong> — the real reason their marketing isn't working (name the structural gap, not a mindset problem).<br>
+                    <strong style="font-weight:500">Email 3</strong> — a client story or real audit finding with tangible results.<br>
+                    <strong style="font-weight:500">Email 4</strong> — the biggest mistake Gleam sees in small business marketing ecosystems.<br>
+                    <strong style="font-weight:500">Email 5</strong> — soft CTA to book a discovery call or apply for the ecosystem audit.
+                  </div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-item-label">Ongoing social content</div>
+                  <div class="detail-item-text">The "We audited your marketing" series keeps working during the nurture period. Every new piece of content reinforces the same message: Gleam has seen this problem before, and they know exactly how to fix it.</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-item-label">What builds trust fastest</div>
+                  <div class="detail-item-text">Naming their specific painful reality before offering any solution. Not "here's how to do better marketing" — but "here's what's actually happening in your business right now and why." Specificity is what makes content feel personal.</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-item-label">The Soap Opera principle</div>
+                  <div class="detail-item-text">Each email ends on a hook that makes the next one feel unmissable. Not a cliffhanger for the sake of it — but a thread. One insight leads to another. By email 5 they should be thinking "I already know I need to talk to them."</div>
+                </div>
+              </div>
+              <div class="detail-goal">
+                <div class="detail-goal-label">Stage goal</div>
+                <div class="detail-goal-text">By the time they see an offer, they already know Gleam understands their industry, has seen this problem before, and knows how to fix it.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stage-connector">
+        <div class="connector-line"></div>
+        <span class="connector-label">email opens, replies, DMs, inbound interest</span>
+      </div>
+
+      <!-- STAGE 4 -->
+      <div class="stage-item">
+        <div class="stage-card" onclick="toggleStage(this)">
+          <div class="stage-header">
+            <span class="stage-number">4</span>
+            <div class="stage-main">
+              <span class="stage-tag tag-4">Conversion</span>
+              <div class="stage-title">The offer moment</div>
+              <div class="stage-subtitle">Two paths in — low-ticket diagnostic first, or straight to discovery for warm leads. Either way, something gets paid for.</div>
+            </div>
+            <div class="stage-toggle">
+              <svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+            </div>
+          </div>
+          <div class="stage-detail">
+            <div class="stage-detail-inner">
+              <div class="detail-grid">
+                <div class="detail-item">
+                  <div class="detail-item-label">Offer A — Marketing ecosystem audit ($497–$797)</div>
+                  <div class="detail-item-text">Gleam audits the brand's full ecosystem: website, email list, Instagram, Google presence. Delivers a findings document plus a 45-minute Zoom call presenting the gaps. The call ends with a natural pitch into Phase 1 or the retainer. The audit IS the sales call — they pay for the diagnosis, the next step feels obvious.</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-item-label">Offer B — Free discovery call (warm / referred leads)</div>
+                  <div class="detail-item-text">30 minutes. Diagnose live. Show them exactly where their ecosystem is broken. Pitch Phase 1 or the retainer directly. Referrals and warm Instagram leads skip the audit and come straight here — they already have enough trust built in.</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-item-label">The application funnel (Brunson play)</div>
+                  <div class="detail-item-text">For higher-value prospects — make them apply. "We're selective about the brands we take on as retainer clients. Apply here." This completely flips the dynamic. Gleam is the expert choosing clients, not the vendor hoping to get picked.</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-item-label">No free strategy sessions</div>
+                  <div class="detail-item-text">This is the rule that changes everything. Gleam's time and expertise have a price. The audit replaces the free call — it delivers real value AND creates the ideal conditions to pitch the next step. Every hour of free strategy that converts to nothing is a cost, not generosity.</div>
+                </div>
+              </div>
+              <div class="detail-goal">
+                <div class="detail-goal-label">Stage goal</div>
+                <div class="detail-goal-text">Paid commitment — either the audit or a signed retainer. No more free sessions that go nowhere.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stage-connector">
+        <div class="connector-line"></div>
+        <span class="connector-label">audit purchase → retainer proposal</span>
+      </div>
+
+      <!-- STAGE 5 -->
+      <div class="stage-item">
+        <div class="stage-card" onclick="toggleStage(this)">
+          <div class="stage-header">
+            <span class="stage-number">5</span>
+            <div class="stage-main">
+              <span class="stage-tag tag-5">Ascension</span>
+              <div class="stage-title">Going deeper</div>
+              <div class="stage-subtitle">Audit clients become retainer clients. Retainer clients go further. The value ladder does the selling.</div>
+            </div>
+            <div class="stage-toggle">
+              <svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+            </div>
+          </div>
+          <div class="stage-detail">
+            <div class="stage-detail-inner">
+              <div class="detail-grid">
+                <div class="detail-item">
+                  <div class="detail-item-label">Phase 1 — Foundation month ($750–$1,000)</div>
+                  <div class="detail-item-text">Month 1 of the retainer. While the client works through the brand playbook workbook, Gleam fixes everything visible: bio optimization, Instagram cleanup, email list setup, website quick wins. Infrastructure before content. Feels like immediate momentum — and it is.</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-item-label">Full retainer — ongoing management (from $1,500/month)</div>
+                  <div class="detail-item-text">Social media content, email marketing, strategy, monthly reporting. Month 2 onward, once the foundation is solid. Scope is flexible but grounded — nothing shifts without a conversation. 5 retainer clients at $1,500 = $7,500/month without adding anyone new.</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-item-label">Project bank hours (the natural upsell)</div>
+                  <div class="detail-item-text">Website overhaul, campaign strategy, brand playbook expansion, paid ad management. These get pitched as the logical next step — not a separate sales conversation. "We noticed X while working on Y — here's what we'd do next." Upsell without selling.</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-item-label">The lifetime value math</div>
+                  <div class="detail-item-text">One retainer client staying 12 months at $1,500 = $18k. Five of those = $90k/year. The goal isn't volume — it's depth. A handful of the right clients who stay, expand, and refer is worth more than 20 short-term engagements.</div>
+                </div>
+              </div>
+              <div class="detail-goal">
+                <div class="detail-goal-label">Stage goal</div>
+                <div class="detail-goal-text">Maximize lifetime value per client. Keep them long enough that the results speak for themselves — and then they tell someone else.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stage-connector">
+        <div class="connector-line"></div>
+        <span class="connector-label">retained clients → referrals + case studies</span>
+      </div>
+
+      <!-- STAGE 6 -->
+      <div class="stage-item">
+        <div class="stage-card" onclick="toggleStage(this)">
+          <div class="stage-header">
+            <span class="stage-number">6</span>
+            <div class="stage-main">
+              <span class="stage-tag tag-6">Retention</span>
+              <div class="stage-title">The flywheel</div>
+              <div class="stage-subtitle">Happy clients become the marketing engine. Referrals feed back into Stage 1 — without a single post.</div>
+            </div>
+            <div class="stage-toggle">
+              <svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+            </div>
+          </div>
+          <div class="stage-detail">
+            <div class="stage-detail-inner">
+              <div class="detail-grid">
+                <div class="detail-item">
+                  <div class="detail-item-label">Client experience that creates referrals</div>
+                  <div class="detail-item-text">Clear onboarding. Proactive communication. Always knowing what happens next. North American clients especially need to feel trust consistently — silence breeds doubt. Regular Loom updates, quick wins in Slack, monthly reports that show what actually moved.</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-item-label">The case study engine</div>
+                  <div class="detail-item-text">Every strong client result becomes content. "We took a wine brand from zero content strategy to [result] in 90 days." These fuel Stage 1 reels and Stage 3 email sequences. The work Gleam does for clients IS the marketing. Nothing extra required.</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-item-label">Referral system</div>
+                  <div class="detail-item-text">Ask at the 60-day mark — when momentum is highest and the client is already proud of what's moving. Make it easy: one email template they can forward. Consider a referral incentive (a free project hour, a month of a reduced rate) for clients who bring in paying work.</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-item-label">Why this matters most</div>
+                  <div class="detail-item-text">Referrals bypass Stages 1 and 2 entirely. They arrive at Stage 3 or 4 already warm. This is how you wake up with leads without publishing every single day. The funnel feeds itself — but only if Stage 6 is built properly.</div>
+                </div>
+              </div>
+              <div class="detail-goal">
+                <div class="detail-goal-label">Stage goal</div>
+                <div class="detail-goal-text">Make the funnel self-filling. Every client should make the next one easier to find.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- VALUE LADDER -->
+  <section class="value-ladder-section">
+    <p class="section-eyebrow">The value ladder</p>
+    <h2 class="vl-title">From free to <em>retained</em></h2>
+    <p class="vl-sub">Every rung exists to make the next one feel like a natural yes — not a sales pitch.</p>
+
+    <div class="vl-rows">
+      <div class="vl-row">
+        <div class="vl-row-left">
+          <span class="vl-dot dot-free"></span>
+          <div>
+            <div class="vl-offer">Free lead magnet</div>
+            <div class="vl-offer-note">Audit checklist, "5 things they got wrong" resource</div>
+          </div>
+        </div>
+        <div class="vl-price free">free</div>
+      </div>
+      <div class="vl-row">
+        <div class="vl-row-left">
+          <span class="vl-dot dot-low"></span>
+          <div>
+            <div class="vl-offer">Marketing ecosystem audit</div>
+            <div class="vl-offer-note">Website + email + Instagram + Google — full findings + call</div>
+          </div>
+        </div>
+        <div class="vl-price">$497–$797</div>
+      </div>
+      <div class="vl-row">
+        <div class="vl-row-left">
+          <span class="vl-dot dot-mid"></span>
+          <div>
+            <div class="vl-offer">Phase 1 — foundation month</div>
+            <div class="vl-offer-note">Infrastructure, cleanup, quick wins before content creation begins</div>
+          </div>
+        </div>
+        <div class="vl-price">$750–$1,000</div>
+      </div>
+      <div class="vl-row">
+        <div class="vl-row-left">
+          <span class="vl-dot dot-high"></span>
+          <div>
+            <div class="vl-offer">Full marketing retainer</div>
+            <div class="vl-offer-note">Social, email, strategy, reporting — ongoing management</div>
+          </div>
+        </div>
+        <div class="vl-price">from $1,500/mo</div>
+      </div>
+      <div class="vl-row">
+        <div class="vl-row-left">
+          <span class="vl-dot dot-addon"></span>
+          <div>
+            <div class="vl-offer">Add-ons & project work</div>
+            <div class="vl-offer-note">Site overhaul, paid ads, brand playbook expansion, campaigns</div>
+          </div>
+        </div>
+        <div class="vl-price" style="font-size:0.85rem; color: var(--dark-mid);">project-based</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BRUNSON PRINCIPLE -->
+  <div class="principle-block">
+    <p class="principle-eyebrow">The Brunson principle</p>
+    <p class="principle-text">Whoever can afford to spend the most to acquire a client <em>wins.</em> A business with one offer can spend $10 to acquire a client. A business with a full value ladder can spend $300 — because they know the lifetime value of a 12-month retainer client is $18,000+.</p>
+    <p class="principle-note">The audit isn't a cost. It's a lead conversion tool that pays for itself the moment the client signs a retainer. The free magnet isn't charity — it's the bait that gets the right person into the room. Every rung of the ladder is a yes that makes the next yes easier.</p>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-logo">
+      <img src="antonia-logo.png" alt="Antonia 2.0">
+    </div>
+    <p class="footer-text">Antonia 2.0 · Digital Business Services · The Funnel Girl</p>
+  </footer>
+
+</main>
+
+<script>
+  function toggleStage(card) {
+    const detail = card.querySelector('.stage-detail');
+    const isOpen = detail.classList.contains('open');
+
+    // Close all
+    document.querySelectorAll('.stage-detail').forEach(d => d.classList.remove('open'));
+    document.querySelectorAll('.stage-card').forEach(c => c.classList.remove('open'));
+
+    // Open clicked if it was closed
+    if (!isOpen) {
+      detail.classList.add('open');
+      card.classList.add('open');
+      // Smooth scroll to card
+      setTimeout(() => {
+        card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 50);
+    }
+  }
+</script>
+
+</body>
+</html>
